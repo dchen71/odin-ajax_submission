@@ -1,14 +1,13 @@
 $(document).ready(function () {
-	var title = document.getElementById('movietitle').value;
+
+});
+
+//Performs th ajax search returning json
+function ajaxSearch(title){
 	$.ajax({
  
     	// The URL for the request
-    	url: "http://www.omdbapi.com/?",
- 
-    	// The data to send (will be converted to a query string)
-    	data: {
-    	    t: title
-    	},
+    	url: "http://www.omdbapi.com/?t=" + title + "&r=json",
  
     	// Whether this is a POST or GET request
     	type: "GET",
@@ -19,7 +18,7 @@ $(document).ready(function () {
     	// Code to run if the request succeeds;
     	// the response is passed to the function
     	success: function( json ) {
-    	    console.log('success');
+    	    console.log(json);
     	},
  
     	// Code to run if the request fails; the raw request and
@@ -36,4 +35,11 @@ $(document).ready(function () {
     	    console.log( "The request is complete!" );
     	}
 	});
+};
+
+//On submit of value, will perform the ajax search
+$('#moviesearch').submit(function(){
+	var title = document.getElementById('movietitle').value;
+	ajaxSearch(title);
+	return false;
 });
