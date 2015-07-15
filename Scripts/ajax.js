@@ -1,9 +1,19 @@
 $(document).ready(function () {
-
+	$('.loading').hide();
+	$(document)
+	    .ajaxStart(function() {
+	        $('.loading').show();
+	        console.log("showing");
+	    })
+	    .ajaxStop(function() {
+	        $('.loading').hide();
+	        console.log("hiding");
+	    });
 });
 
 //Performs th ajax search returning json
 function ajaxSearch(title){
+
 	$.ajax({
  
     	// The URL for the request
