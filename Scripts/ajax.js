@@ -1,3 +1,4 @@
+//Initializes the hiding and showing of the loading picture upon ajax
 $(document).ready(function () {
 	$('.loading').hide();
 	$(document)
@@ -27,8 +28,10 @@ function ajaxSearch(title){
  
     	// Code to run if the request succeeds;
     	// the response is passed to the function
-    	success: function( json ) {
+    	success: function(json) {
     	    console.log(json);
+    	    if(json.Response == "False")
+    	    	createEntry(json); 	    	
     	},
  
     	// Code to run if the request fails; the raw request and
@@ -45,6 +48,29 @@ function ajaxSearch(title){
     	    console.log( "The request is complete!" );
     	}
 	});
+};
+
+//Creates the data to append to the body
+function createEntry(data){
+	console.log('data is here');
+	const head = '<div class="col-md-4 col-md-offset-4 well"><section>'
+	const foot = '</section></div>'
+	if(data.Response == "False"){
+    	$('.movies').append(head + '<p>No movies found</p>' + foot);
+   		 console.log('made it');
+	}
+	else{
+		var title = data.Title;
+		var year = data.Year;
+		var rating = data.Rated;
+		var release = data.Released;
+		var runtime = data.Runtime;
+		var genre = data.Genre;
+		var plot = data.Plot;
+		var language = data.Language;
+		var awards = data.Awards;
+		var poster = data.Poster;
+	}
 };
 
 //On submit of value, will perform the ajax search
