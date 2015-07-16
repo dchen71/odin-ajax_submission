@@ -1,18 +1,43 @@
 //Initializes the hiding and showing of the loading picture upon ajax
 $(document).ready(function () {
+	var searching = false;
+	var results = 0;
+
 	$('.loading').hide();
 	$(document)
 	    .ajaxStart(function() {
-    		$('.content').empty();
+	    	searching = true;
 	        $('.loading').show();
 	    })
 	    .ajaxStop(function() {
+	    	searching = false;
 	        $('.loading').hide();
 	    });
+
+	//On scroll to the bottom will ajax the rest of the query
+	$(document).scroll(function(){
+		if(scrolling(".movie:last-child")){
+			var title = document.getElementById('movietitle').value;
+			ajaxInfo(title);
+		}
+		//Hits the last element then it runs ajax again
+	});
 });
 
+//Function to detect hitting the bottom of the page
+//Need function to detect the bottom of the page
+function scrolling(element){
+	var docTop = $(window).scrollTop();
+	var docBottom = docTop + $(window).height();
+
+	var elemTop = $(element).offset().top;
+	var elemBottom = elemTop + $(element).height();
+
+	return((elemBottom <= docBottom) && (elemTop >= docTop));
+}
+
 //Global for header and footer for the content views
-const head = '<div class="col-md-4 col-md-offset-4 well"><section>'
+const head = '<div class="col-md-4 col-md-offset-4 well movie"><section>'
 const foot = '</section></div>'
 
 //Performs the ajax search that will create the entries
@@ -32,15 +57,7 @@ function ajaxSearch(id){
     	// Code to run if the request succeeds;
     	// the response is passed to the function
     	success: function(json) {
-    	    console.log(json);
-			if(json.Response == "False"){
-    			var response = '<p>No movies found</p>';
-    			$('.content').append(head + response + foot);
-			}
-			else {
-				createEntry(json); 	    	
-			}
-
+			createEntry(json); 	    	
     	},
  
     	// Code to run if the request fails; the raw request and
@@ -82,14 +99,16 @@ function ajaxInfo(title){
     			$('.content').append(head + response + foot);
 			}
 			else {
-				if(json.length > 10)
-					var max = 10;
+				if(json.Search.length > 5)
+					var max = 5;
 				else
-					var max = json.length;
-				for(var i=0; i< 10; i++){
+					var max = json.Search.length;
+				
+				for(var i=results; i < max; i++){
 					console.log(json.Search[i]);
 					ajaxSearch(json.Search[i].imdbID);
 				}
+				results = max;
 			}
 
     	},
@@ -157,6 +176,8 @@ function createEntry(data){
 
 //On submit of value, will perform the ajax search
 $('#moviesearch').submit(function(){
+	$('.content').empty();
+	results = 0;
 	var title = document.getElementById('movietitle').value;
 	ajaxInfo(title);
 	return false;
