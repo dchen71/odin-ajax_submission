@@ -1,7 +1,14 @@
+//Global for header and footer for the content views
+const head = '<div class="col-md-4 col-md-offset-4 well movie"><section>'
+const foot = '</section></div>'
+
+//Initializes variables to detect if continue to scroll and load
+var results = 0;
+var totalresults = 0;
+
 //Initializes the hiding and showing of the loading picture upon ajax
 $(document).ready(function () {
 	var searching = false;
-	var results = 0;
 
 	//Logic which shows and hides the loading div with loading pic based on ajax calls
 	$('.loading').hide();
@@ -18,8 +25,11 @@ $(document).ready(function () {
 	//On scroll to the bottom will ajax the rest of the query
 	$(document).scroll(function(){
 		if(scrolling(".movie:last-child")){
-			var title = document.getElementById('movietitle').value;
-			ajaxInfo(title);
+			console.log(results);
+			if(results < totalresults){
+				var title = document.getElementById('movietitle').value;
+				ajaxInfo(title);
+			}
 		}
 	});
 });
@@ -34,10 +44,6 @@ function scrolling(element){
 
 	return((elemBottom <= docBottom) && (elemTop >= docTop));
 }
-
-//Global for header and footer for the content views
-const head = '<div class="col-md-4 col-md-offset-4 well movie"><section>'
-const foot = '</section></div>'
 
 //Performs the ajax search that will create the entries
 function ajaxSearch(id){
@@ -103,10 +109,12 @@ function ajaxInfo(title){
 				else
 					var max = json.Search.length;
 				
+
 				for(var i= results; i < max; i++){
 					console.log(json.Search[i]);
 					ajaxSearch(json.Search[i].imdbID);
 				}
+				totalresults = json.Search.length;
 				results = max;
 			}
 
@@ -177,6 +185,7 @@ function createEntry(data){
 $('#moviesearch').submit(function(){
 	$('.content').empty();
 	results = 0;
+	totalresults = 0;
 	var title = document.getElementById('movietitle').value;
 	ajaxInfo(title);
 	return false;
