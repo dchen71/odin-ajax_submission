@@ -65,7 +65,7 @@ function ajaxInfo(title){
 	$.ajax({
  
     	// The URL for the request
-    	url: "http://www.omdbapi.com/?s=" + title + "&r=json",
+    	url: "http://www.omdbapi.com/?s=" + title + "&type=movie&r=json",
  
     	// Whether this is a POST or GET request
     	type: "GET",
