@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var searching = false;
 	var results = 0;
 
+	//Logic which shows and hides the loading div with loading pic based on ajax calls
 	$('.loading').hide();
 	$(document)
 	    .ajaxStart(function() {
@@ -20,12 +21,10 @@ $(document).ready(function () {
 			var title = document.getElementById('movietitle').value;
 			ajaxInfo(title);
 		}
-		//Hits the last element then it runs ajax again
 	});
 });
 
 //Function to detect hitting the bottom of the page
-//Need function to detect the bottom of the page
 function scrolling(element){
 	var docTop = $(window).scrollTop();
 	var docBottom = docTop + $(window).height();
