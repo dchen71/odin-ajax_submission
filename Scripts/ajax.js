@@ -69,8 +69,25 @@ function createEntry(data){
 		var poster = data.Poster;
 		var rating = data.imdbRating;
 
-    	var aside = '<aside><img src="' + poster + '"><p>Picture</p></aside>';
-    	$('.content').append(head + aside + foot);    	
+        var header = '<header class="content-header">' + 
+        				'<h2>' + title + '</h2>' + 
+        				'<hr>' + 
+        				'<p class="col-md-4"><strong>Year:</strong> <em>' + year + '</em></p>' + 
+        				'<p class="col-md-4"><strong>Runtime:</strong> <em>' + runtime + '</em></p>' + 
+        				'<p class="col-md-4"><strong>Rating:</strong> <em>' + rating + '</em></p>'
+        			'</header>';
+
+    	var aside = '<div class="pull-right">' + 
+    					'<aside class="pull-left text-left col-md-5 pic-info">' + 
+    						'<img src="' + poster + '">' +
+    						'<p class="col-md-offset-2"><strong>imdbRating:</strong>' + rating + '</p>' +
+    					'</aside>';
+    	var body = '<p><strong>Plot:</strong>' + plot + '</p>' +
+        	       '<p><strong>Genre:</strong>' + genre + '</p>' +
+        	       '<p><strong>Language:</strong>' + language + '</p>' +
+        	       '<p><strong>Awards:</strong>' + awards + '</p>' +
+        	     '</div>'
+    	$('.content').append(head + header + aside + body + foot);    	
 	}
 };
 
