@@ -4,6 +4,8 @@ Global
 img{
 	height: 80%;
 	width: 80%;
+	min-height: 161px;
+	min-width: 108px;
 }
 
 
