@@ -99,12 +99,12 @@ function ajaxInfo(title){
     			$('.content').append(head + response + foot);
 			}
 			else {
-				if(json.Search.length > 5)
+				if(json.Search.length - results > 5)
 					var max = 5;
 				else
 					var max = json.Search.length;
 				
-				for(var i=results; i < max; i++){
+				for(var i= results; i < max; i++){
 					console.log(json.Search[i]);
 					ajaxSearch(json.Search[i].imdbID);
 				}
