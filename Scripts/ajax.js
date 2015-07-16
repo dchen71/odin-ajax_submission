@@ -82,6 +82,10 @@ function ajaxInfo(title){
     			$('.content').append(head + response + foot);
 			}
 			else {
+				if(json.length > 10)
+					var max = 10;
+				else
+					var max = json.length;
 				for(var i=0; i< 10; i++){
 					console.log(json.Search[i]);
 					ajaxSearch(json.Search[i].imdbID);
@@ -116,8 +120,12 @@ function createEntry(data){
 	var plot = data.Plot;
 	var language = data.Language;
 	var awards = data.Awards;
-	var poster = data.Poster;
 	var rating = data.imdbRating;
+	if (data.Poster == 'N/A')
+		var poster = "Images/NA.png";
+	else
+		var poster = data.Poster;
+
 
 	//Contains the title and generatl information
     var header = '<header class="content-header">' + 
