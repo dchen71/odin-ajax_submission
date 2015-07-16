@@ -67,6 +67,7 @@ function createEntry(data){
 		var language = data.Language;
 		var awards = data.Awards;
 		var poster = data.Poster;
+		var rating = data.imdbRating;
 
     	var aside = '<aside><img src="' + poster + '"><p>Picture</p></aside>';
     	$('.content').append(head + aside + foot);    	

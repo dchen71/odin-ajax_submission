@@ -1,0 +1,19 @@
+/*
+Global
+*/
+img{
+	height: 80%;
+	width: 80%;
+}
+
+
+/*
+Changes the box of info to the left for movies
+*/
+.pic-info{
+	min-height: 100%;
+}
+
+.content-header p{
+	margin-bottom: 30px;
+}
